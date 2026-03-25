@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Cricket Game</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .game-info { margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Interactive Cricket Batting Game</h1>
+    <div class="game-info">
+        <p>Score: <span id="score">0</span></p>
+        <p>Wickets: <span id="wickets">0</span></p>
+        <p>Overs: <span id="overs">0</span> (Balls: <span id="balls">0</span>)</p>
+        <button id="hitBtn">Hit the Ball</button>
+    </div>
+    
+    <script>
+        let score = 0;
+        let wickets = 0;
+        let balls = 0;
+        const oversLimit = 6; // 6 balls per over
+        const totalOvers = 5; // total overs to be played
+        let totalBalls = totalOvers * oversLimit;
+
+        document.getElementById('hitBtn').onclick = function() {
+            if (balls < totalBalls) {
+                const run = Math.floor(Math.random() * 7); // Random runs between 0 to 6
+                if (run === 6) {
+                    alert('Great Shot! You scored a Six!');
+                } else if (run === 0) {
+                    wickets++;
+                    alert('Out! You lost a wicket!');
+                } else {
+                    score += run;
+                    alert('You scored ' + run + ' run(s)');
+                }
+
+                balls++;
+                updateGameInfo();
+            } else {
+                alert('Innings Over! Final Score: ' + score);
+            }
+        };
+
+        function updateGameInfo() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('wickets').textContent = wickets;
+            document.getElementById('balls').textContent = balls % oversLimit;
+            document.getElementById('overs').textContent = Math.floor(balls / oversLimit);
+        }
+    </script>
+</body>
+</html>
